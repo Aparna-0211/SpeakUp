@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SpeakUp | Check-in</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+    <style>
+        .checkin-page {
+            min-height: 100vh;
+            padding: 110px 20px 60px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .checkin-wrapper {
+            width: 100%;
+            max-width: 720px;
+        }
+
+        .checkin-heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .checkin-heading .badge {
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .checkin-heading h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .checkin-heading p {
+            color: #6b7280;
+            font-size: 16px;
+        }
+
+        .checkin-box {
+            background: white;
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
+        }
+
+        .question {
+            margin-bottom: 32px;
+        }
+
+        .question-title {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .situation-input,
+        .reflection-input {
+            width: 100%;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 15px;
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+            transition: 0.2s;
+            box-sizing: border-box;
+        }
+
+        .situation-input:focus,
+        .reflection-input:focus {
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        .reflection-input {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        .feeling-options {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .feeling-option {
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 16px;
+            padding: 16px 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .feeling-option:hover {
+            transform: translateY(-2px);
+            border-color: #a78bfa;
+        }
+
+        .feeling-option.selected {
+            border-color: #8b5cf6;
+            background: #f5f3ff;
+            box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.15);
+        }
+
+        .feeling-emoji {
+            display: block;
+            font-size: 28px;
+            margin-bottom: 7px;
+        }
+
+        .feeling-name {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .confidence-options {
+            display: flex;
+            gap: 12px;
+        }
+
+        .confidence-option {
+            flex: 1;
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 14px;
+            padding: 14px 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .confidence-option:hover {
+            border-color: #8b5cf6;
+        }
+
+        .confidence-option.selected {
+            background: #f5f3ff;
+            border-color: #8b5cf6;
+            color: #6d28d9;
+            font-weight: 700;
+        }
+
+        .confidence-number {
+            font-size: 20px;
+            font-weight: 700;
+            display: block;
+        }
+
+        .confidence-label {
+            font-size: 11px;
+            color: #6b7280;
+        }
+
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            color: #9ca3af;
+            font-size: 12px;
+        }
+
+        .submit-area {
+            margin-top: 10px;
+        }
+
+        .submit-button {
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 16px;
+        }
+
+        .result {
+            display: none;
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 14px;
+            background: #f5f3ff;
+            color: #5b21b6;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        @media (max-width: 650px) {
+
+            .checkin-heading h1 {
+                font-size: 32px;
+            }
+
+            .checkin-box {
+                padding: 24px;
+            }
+
+            .feeling-options {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .confidence-options {
+                gap: 6px;
+            }
+
+            .confidence-label {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            <span class="logo-icon">S</span>
+            <span>SpeakUp</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+        </div>
+
+    </nav>
+
+
+    <!-- Check-in -->
+
+    <main class="checkin-page">
+
+        <div class="checkin-wrapper">
+
+
+            <div class="checkin-heading">
+
+                <div class="badge">
+                    ✨ Daily reflection
+                </div>
+
+                <h1>
+                    How did speaking feel today?
+                </h1>
+
+                <p>
+                    There are no right or wrong answers.
+                    Just be honest with yourself.
+                </p>
+
+            </div>
+
+
+            <div class="checkin-box">
+
+                <form id="checkinForm">
+
+
+                    <!-- Situation -->
+
+                    <div class="question">
+
+                        <div class="question-title">
+                            1. What speaking situation did you experience?
+                        </div>
+
+                        <input
+                            type="text"
+                            id="situation"
+                            class="situation-input"
+                            placeholder="Example: Answering a question in class"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Feeling -->
+
+                    <div class="question">
+
+                        <div class="question-title">
+                            2. How did you feel?
+                        </div>
+
+                        <div class="feeling-options">
+
+                            <div class="feeling-option" data-value="confident">
+                                <span class="feeling-emoji">😎</span>
+                                <span class="feeling-name">Confident</span>
+                            </div>
+
+                            <div class="feeling-option" data-value="comfortable">
+                                <span class="feeling-emoji">😊</span>
+                                <span class="feeling-name">Comfortable</span>
+                            </div>
+
+                            <div class="feeling-option" data-value="okay">
+                                <span class="feeling-emoji">😐</span>
+                                <span class="feeling-name">Okay</span>
+                            </div>
+
+                            <div class="feeling-option" data-value="nervous">
+                                <span class="feeling-emoji">😰</span>
+                                <span class="feeling-name">Nervous</span>
+                            </div>
+
+                            <div class="feeling-option" data-value="anxious">
+                                <span class="feeling-emoji">😣</span>
+                                <span class="feeling-name">Very anxious</span>
+                            </div>
+
+                        </div>
+
+                        <input type="hidden" id="feeling" required>
+
+                    </div>
+
+
+                    <!-- Confidence -->
+
+                    <div class="question">
+
+                        <div class="question-title">
+                            3. How confident did you feel?
+                        </div>
+
+                        <div class="confidence-options">
+
+                            <div class="confidence-option" data-value="1">
+                                <span class="confidence-number">1</span>
+                                <span class="confidence-label">Very low</span>
+                            </div>
+
+                            <div class="confidence-option" data-value="2">
+                                <span class="confidence-number">2</span>
+                                <span class="confidence-label">Low</span>
+                            </div>
+
+                            <div class="confidence-option" data-value="3">
+                                <span class="confidence-number">3</span>
+                                <span class="confidence-label">Okay</span>
+                            </div>
+
+                            <div class="confidence-option" data-value="4">
+                                <span class="confidence-number">4</span>
+                                <span class="confidence-label">Good</span>
+                            </div>
+
+                            <div class="confidence-option" data-value="5">
+                                <span class="confidence-number">5</span>
+                                <span class="confidence-label">Excellent</span>
+                            </div>
+
+                        </div>
+
+                        <div class="scale-labels">
+                            <span>Not confident</span>
+                            <span>Very confident</span>
+                        </div>
+
+                        <input type="hidden" id="confidence" required>
+
+                    </div>
+
+
+                    <!-- Reflection -->
+
+                    <div class="question">
+
+                        <div class="question-title">
+                            4. Tell SpeakUp what happened
+                        </div>
+
+                        <textarea
+                            id="reflection"
+                            class="reflection-input"
+                            placeholder="What happened? What made you feel this way? What went well?"
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- Submit -->
+
+                    <div class="submit-area">
+
+                        <button
+                            type="submit"
+                            class="primary-button submit-button"
+                        >
+                            Complete Check-in →
+                        </button>
+
+                    </div>
+
+
+                </form>
+
+
+                <div
+                    id="result"
+                    class="result"
+                ></div>
+
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        // Feeling selection
+
+        const feelingOptions =
+            document.querySelectorAll(".feeling-option");
+
+        const feelingInput =
+            document.getElementById("feeling");
+
+
+        feelingOptions.forEach(option => {
+
+            option.addEventListener("click", () => {
+
+                feelingOptions.forEach(item =>
+                    item.classList.remove("selected")
+                );
+
+                option.classList.add("selected");
+
+                feelingInput.value =
+                    option.dataset.value;
+
+            });
+
+        });
+
+
+        // Confidence selection
+
+        const confidenceOptions =
+            document.querySelectorAll(".confidence-option");
+
+        const confidenceInput =
+            document.getElementById("confidence");
+
+
+        confidenceOptions.forEach(option => {
+
+            option.addEventListener("click", () => {
+
+                confidenceOptions.forEach(item =>
+                    item.classList.remove("selected")
+                );
+
+                option.classList.add("selected");
+
+                confidenceInput.value =
+                    option.dataset.value;
+
+            });
+
+        });
+
+
+        // Form submission
+
+        const form =
+            document.getElementById("checkinForm");
+
+
+        form.addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+
+            if (!feelingInput.value) {
+
+                alert("Please select how you felt.");
+
+                return;
+
+            }
+
+
+            if (!confidenceInput.value) {
+
+                alert("Please select your confidence level.");
+
+                return;
+
+            }
+
+
+            const checkinData = {
+
+                situation:
+                    document.getElementById("situation").value,
+
+                feeling:
+                    feelingInput.value,
+
+                confidence:
+                    confidenceInput.value,
+
+                reflection:
+                    document.getElementById("reflection").value
+
+            };
+
+
+            try {
+
+                const response =
+                    await fetch("/api/checkin", {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(checkinData)
+
+                    });
+
+
+                const result =
+                    await response.json();
+
+
+                document.getElementById("result").style.display =
+                    "block";
+
+                document.getElementById("result").innerHTML =
+                    "✨ " + result.message;
+
+
+                form.reset();
+
+
+                feelingOptions.forEach(item =>
+                    item.classList.remove("selected")
+                );
+
+                confidenceOptions.forEach(item =>
+                    item.classList.remove("selected")
+                );
+
+                feelingInput.value = "";
+                confidenceInput.value = "";
+
+
+            } catch (error) {
+
+                document.getElementById("result").style.display =
+                    "block";
+
+                document.getElementById("result").innerHTML =
+                    "Something went wrong. Please try again.";
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>

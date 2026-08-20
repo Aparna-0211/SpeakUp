@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SpeakUp | Build Your Confidence</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+
+        <div class="logo">
+            <span class="logo-icon">S</span>
+            <span>SpeakUp</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#how-it-works">How it works</a>
+            <a href="#about">About</a>
+        </div>
+
+        <button class="nav-button">
+            Get Started
+        </button>
+
+    </nav>
+
+
+    <!-- Hero Section -->
+    <main id="home">
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="badge">
+                    ✨ Your everyday confidence companion
+                </div>
+
+                <h1>
+                    Understand your voice.
+                    <span>Build your confidence.</span>
+                </h1>
+
+                <p>
+                    Reflect on your speaking experiences, discover
+                    patterns, and take small steps toward becoming
+                    a more confident communicator.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <button
+                        class="primary-button"
+                        onclick="window.location.href='/checkin'"
+                    >
+                        Start a Check-in
+                        <span>→</span>
+                    </button>
+
+                    <button class="secondary-button">
+                        See how it works
+                    </button>
+
+                </div>
+
+                <div class="trust-line">
+                    🔒 Your reflections stay private and stored locally.
+                </div>
+
+            </div>
+
+
+            <!-- App Preview -->
+            <div class="app-preview">
+
+                <div class="preview-header">
+
+                    <div>
+                        <small>Good evening 👋</small>
+                        <h3>Ready to reflect?</h3>
+                    </div>
+
+                    <div class="avatar">
+                        S
+                    </div>
+
+                </div>
+
+
+                <div class="checkin-card">
+
+                    <div class="checkin-icon">
+                        ✨
+                    </div>
+
+                    <div>
+                        <small>Today's check-in</small>
+                        <h4>How did speaking feel today?</h4>
+                    </div>
+
+                    <button>→</button>
+
+                </div>
+
+
+                <div class="stats">
+
+                    <div class="stat-card">
+                        <span>🔥</span>
+                        <small>Streak</small>
+                        <strong>7 days</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <span>📈</span>
+                        <small>Progress</small>
+                        <strong>+18%</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Features -->
+        <section class="features" id="how-it-works">
+
+            <div class="section-heading">
+
+                <span>HOW SPEAKUP WORKS</span>
+
+                <h2>
+                    Small reflections.
+                    <br>
+                    Meaningful progress.
+                </h2>
+
+            </div>
+
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon purple">
+                        ✍️
+                    </div>
+
+                    <h3>Check in</h3>
+
+                    <p>
+                        Quickly record what happened during
+                        your speaking experience.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon blue">
+                        📊
+                    </div>
+
+                    <h3>Discover patterns</h3>
+
+                    <p>
+                        Understand when and where you feel
+                        most comfortable speaking.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon green">
+                        💡
+                    </div>
+
+                    <h3>Grow gradually</h3>
+
+                    <p>
+                        Get personalized suggestions based
+                        on your own experiences.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Bottom CTA -->
+        <section class="cta" id="about">
+
+            <h2>
+                Ready to understand your voice?
+            </h2>
+
+            <p>
+                Start with one small check-in.
+            </p>
+
+            <button class="primary-button">
+                Start your journey →
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <div class="logo">
+            <span class="logo-icon">S</span>
+            SpeakUp
+        </div>
+
+        <p>
+            Understand. Reflect. Grow.
+        </p>
+
+    </footer>
+
+</body>
+</html>

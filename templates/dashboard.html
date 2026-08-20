@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SpeakUp | Dashboard</title>
+
+
+    <!-- Google Font -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- Main SpeakUp CSS -->
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+
+    <style>
+
+        /* =====================================
+           PAGE
+        ===================================== */
+
+        .dashboard-page {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            background: #fafafa;
+
+        }
+
+
+
+        /* =====================================
+           SIDEBAR
+        ===================================== */
+
+        .sidebar {
+
+            width: 240px;
+
+            min-height: 100vh;
+
+            background: white;
+
+            border-right: 1px solid #eeeeee;
+
+            padding: 25px 18px;
+
+            box-sizing: border-box;
+
+            flex-shrink: 0;
+
+        }
+
+
+
+        /* Logo */
+
+        .sidebar-logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+            margin-bottom: 40px;
+
+        }
+
+
+        .sidebar-logo .logo-icon {
+
+            display: inline-flex;
+
+        }
+
+
+
+        /* Navigation */
+
+        .sidebar-nav {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+
+        }
+
+
+        .sidebar-nav a {
+
+            padding: 12px 14px;
+
+            border-radius: 12px;
+
+            text-decoration: none;
+
+            color: #6b7280;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+
+        }
+
+
+        .sidebar-nav a:hover {
+
+            background: #f5f3ff;
+
+            color: #7c3aed;
+
+        }
+
+
+        .sidebar-nav a.active {
+
+            background: #f5f3ff;
+
+            color: #7c3aed;
+
+        }
+
+
+
+        /* =====================================
+           MAIN CONTENT
+        ===================================== */
+
+        .dashboard-content {
+
+            flex: 1;
+
+            padding: 30px 45px 50px;
+
+            min-width: 0;
+
+        }
+
+
+
+        /* =====================================
+           TOP BAR
+        ===================================== */
+
+        .top-bar {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+
+        }
+
+
+
+        /* =====================================
+           ACCOUNT BUTTON
+        ===================================== */
+
+        .account-container {
+
+            position: relative;
+
+        }
+
+
+        .account-avatar {
+
+            width: 44px;
+
+            height: 44px;
+
+            border-radius: 50%;
+
+            border: none;
+
+            background: #7c3aed;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            transition: 0.2s;
+
+        }
+
+
+        .account-avatar:hover {
+
+            transform: scale(1.05);
+
+        }
+
+
+
+        /* =====================================
+           ACCOUNT DROPDOWN
+        ===================================== */
+
+        .account-menu {
+
+            display: none;
+
+            position: absolute;
+
+            right: 0;
+
+            top: 55px;
+
+            width: 280px;
+
+            background: white;
+
+            border-radius: 16px;
+
+            padding: 12px;
+
+            box-shadow:
+                0 12px 40px rgba(0, 0, 0, 0.12);
+
+            z-index: 100;
+
+        }
+
+
+        .account-menu.show {
+
+            display: block;
+
+        }
+
+
+
+        /* Account information */
+
+        .account-info {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 10px;
+
+        }
+
+
+        .account-avatar.large {
+
+            width: 42px;
+
+            height: 42px;
+
+            flex-shrink: 0;
+
+        }
+
+
+        .account-info strong {
+
+            display: block;
+
+            font-size: 14px;
+
+            color: #111827;
+
+        }
+
+
+        .account-info span {
+
+            display: block;
+
+            color: #6b7280;
+
+            font-size: 12px;
+
+            margin-top: 4px;
+
+            word-break: break-all;
+
+        }
+
+
+
+        /* Divider */
+
+        .account-divider {
+
+            height: 1px;
+
+            background: #eeeeee;
+
+            margin: 8px 0;
+
+        }
+
+
+
+        /* Account links */
+
+        .account-menu a {
+
+            display: block;
+
+            padding: 11px 12px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            color: #374151;
+
+            font-size: 14px;
+
+            transition: 0.2s;
+
+        }
+
+
+        .account-menu a:hover {
+
+            background: #f5f3ff;
+
+        }
+
+
+        .account-menu .logout-link {
+
+            color: #dc2626;
+
+        }
+
+
+
+        /* =====================================
+           WELCOME SECTION
+        ===================================== */
+
+        .welcome h1 {
+
+            font-size: 32px;
+
+            margin: 0 0 8px;
+
+            color: #111827;
+
+        }
+
+
+        .welcome p {
+
+            color: #6b7280;
+
+            margin: 0 0 35px;
+
+        }
+
+
+
+        /* =====================================
+           STATISTICS
+        ===================================== */
+
+        .stat-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .stat-box {
+
+            background: white;
+
+            padding: 24px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.05);
+
+            transition: 0.2s;
+
+        }
+
+
+        .stat-box:hover {
+
+            transform: translateY(-2px);
+
+        }
+
+
+        .stat-icon {
+
+            font-size: 24px;
+
+        }
+
+
+        .stat-label {
+
+            display: block;
+
+            color: #6b7280;
+
+            font-size: 13px;
+
+            margin-top: 12px;
+
+        }
+
+
+        .stat-value {
+
+            display: block;
+
+            font-size: 28px;
+
+            font-weight: 800;
+
+            margin-top: 5px;
+
+            color: #111827;
+
+        }
+
+
+
+        /* =====================================
+           START CHECK-IN CARD
+        ===================================== */
+
+        .dashboard-card {
+
+            background: white;
+
+            padding: 28px;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.05);
+
+        }
+
+
+        .dashboard-card h2 {
+
+            margin-top: 0;
+
+            color: #111827;
+
+        }
+
+
+        .dashboard-card p {
+
+            color: #6b7280;
+
+            line-height: 1.7;
+
+            max-width: 650px;
+
+        }
+
+
+        .dashboard-card .primary-button {
+
+            display: inline-block;
+
+            text-decoration: none;
+
+            margin-top: 10px;
+
+        }
+
+
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+
+                width: 210px;
+
+            }
+
+
+            .dashboard-content {
+
+                padding: 25px;
+
+            }
+
+
+            .stat-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+
+        @media (max-width: 650px) {
+
+            .dashboard-page {
+
+                flex-direction: column;
+
+            }
+
+
+            .sidebar {
+
+                width: 100%;
+
+                min-height: auto;
+
+                border-right: none;
+
+                border-bottom: 1px solid #eeeeee;
+
+                padding: 15px;
+
+            }
+
+
+            .sidebar-logo {
+
+                margin-bottom: 15px;
+
+            }
+
+
+            .sidebar-nav {
+
+                flex-direction: row;
+
+                overflow-x: auto;
+
+            }
+
+
+            .sidebar-nav a {
+
+                white-space: nowrap;
+
+            }
+
+
+            .dashboard-content {
+
+                padding: 25px 18px;
+
+            }
+
+
+            .welcome h1 {
+
+                font-size: 26px;
+
+            }
+
+
+            .stat-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+
+<body>
+
+
+    <div class="dashboard-page">
+
+
+        <!-- =================================
+             SIDEBAR
+        ================================== -->
+
+        <aside class="sidebar">
+
+
+            <!-- Logo -->
+
+            <div class="sidebar-logo">
+
+                <span class="logo-icon">
+                    S
+                </span>
+
+                <span>
+                    SpeakUp
+                </span>
+
+            </div>
+
+
+
+            <!-- Navigation -->
+
+            <nav class="sidebar-nav">
+
+
+                <a
+                    href="/dashboard"
+                    class="active"
+                >
+
+                    🏠 Dashboard
+
+                </a>
+
+
+                <a href="/checkin">
+
+                    ✨ Check-in
+
+                </a>
+
+
+                <a href="#">
+
+                    📊 My Progress
+
+                </a>
+
+
+                <a href="#">
+
+                    🕘 History
+
+                </a>
+
+
+                <a href="#">
+
+                    💡 Suggestions
+
+                </a>
+
+
+            </nav>
+
+
+        </aside>
+
+
+
+        <!-- =================================
+             MAIN CONTENT
+        ================================== -->
+
+        <main class="dashboard-content">
+
+
+
+            <!-- =================================
+                 TOP RIGHT ACCOUNT
+            ================================== -->
+
+            <div class="top-bar">
+
+
+                <div class="account-container">
+
+
+                    <!-- Avatar -->
+
+                    <button
+                        class="account-avatar"
+                        onclick="toggleAccountMenu()"
+                        aria-label="Open account menu"
+                    >
+
+                        {{ username[0].upper() }}
+
+                    </button>
+
+
+
+                    <!-- Account Menu -->
+
+                    <div
+                        class="account-menu"
+                        id="accountMenu"
+                    >
+
+
+                        <!-- User information -->
+
+                        <div class="account-info">
+
+
+                            <div class="account-avatar large">
+
+                                {{ username[0].upper() }}
+
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+
+                                    {{ username }}
+
+                                </strong>
+
+
+                                <span>
+
+                                    {{ session["email"] }}
+
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <div class="account-divider"></div>
+
+
+
+                        <!-- Profile -->
+
+                        <a href="#">
+
+                            👤 My Profile
+
+                        </a>
+
+
+
+                        <!-- Settings -->
+
+                        <a href="#">
+
+                            ⚙️ Account Settings
+
+                        </a>
+
+
+
+                        <!-- Logout -->
+
+                        <a
+                            href="/logout"
+                            class="logout-link"
+                        >
+
+                            🚪 Logout
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================
+                 WELCOME
+            ================================== -->
+
+            <div class="welcome">
+
+
+                <h1>
+
+                    Good evening,
+                    {{ username }} 👋
+
+                </h1>
+
+
+                <p>
+
+                    Here's a look at your speaking journey.
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- =================================
+                 STATISTICS
+            ================================== -->
+
+            <div class="stat-grid">
+
+
+                <!-- Streak -->
+
+                <div class="stat-box">
+
+
+                    <span class="stat-icon">
+
+                        🔥
+
+                    </span>
+
+
+                    <span class="stat-label">
+
+                        Current streak
+
+                    </span>
+
+
+                    <span class="stat-value">
+
+                        0 days
+
+                    </span>
+
+
+                </div>
+
+
+
+                <!-- Confidence -->
+
+                <div class="stat-box">
+
+
+                    <span class="stat-icon">
+
+                        📈
+
+                    </span>
+
+
+                    <span class="stat-label">
+
+                        Average confidence
+
+                    </span>
+
+
+                    <span class="stat-value">
+
+                        --
+
+                    </span>
+
+
+                </div>
+
+
+
+                <!-- Check-ins -->
+
+                <div class="stat-box">
+
+
+                    <span class="stat-icon">
+
+                        🎤
+
+                    </span>
+
+
+                    <span class="stat-label">
+
+                        Total check-ins
+
+                    </span>
+
+
+                    <span class="stat-value">
+
+                        0
+
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================
+                 CHECK-IN CARD
+            ================================== -->
+
+            <div class="dashboard-card">
+
+
+                <h2>
+
+                    Start your journey ✨
+
+                </h2>
+
+
+                <p>
+
+                    Your first check-in is waiting.
+                    Take a moment to reflect on a
+                    speaking experience and begin
+                    building your confidence history.
+
+                </p>
+
+
+                <a
+                    href="/checkin"
+                    class="primary-button"
+                >
+
+                    Start a Check-in →
+
+                </a>
+
+
+            </div>
+
+
+        </main>
+
+
+    </div>
+
+
+
+    <!-- =================================
+         ACCOUNT MENU JAVASCRIPT
+    ================================== -->
+
+    <script>
+
+
+        function toggleAccountMenu() {
+
+            const menu =
+                document.getElementById(
+                    "accountMenu"
+                );
+
+
+            menu.classList.toggle(
+                "show"
+            );
+
+        }
+
+
+
+        /* Close menu when clicking
+           outside the account */
+
+        document.addEventListener(
+            "click",
+            function(event) {
+
+
+                const container =
+                    document.querySelector(
+                        ".account-container"
+                    );
+
+
+                const menu =
+                    document.getElementById(
+                        "accountMenu"
+                    );
+
+
+                if (
+                    !container.contains(
+                        event.target
+                    )
+                ) {
+
+                    menu.classList.remove(
+                        "show"
+                    );
+
+                }
+
+            }
+        );
+
+
+    </script>
+
+
+</body>
+
+</html>

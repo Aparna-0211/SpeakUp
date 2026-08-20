@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SpeakUp | Create Account</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+
+            <span class="logo-icon">
+                S
+            </span>
+
+            <span>
+                SpeakUp
+            </span>
+
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="/">
+                Home
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <main class="checkin-page">
+
+        <div class="checkin-wrapper">
+
+
+            <div class="checkin-heading">
+
+                <div class="badge">
+                    ✨ Join SpeakUp
+                </div>
+
+                <h1>
+                    Create your account
+                </h1>
+
+                <p>
+                    Start your journey toward becoming
+                    a more confident communicator.
+                </p>
+
+            </div>
+
+
+            <div class="checkin-box">
+
+
+                <form
+                    method="POST"
+                    action="/signup"
+                >
+
+
+                    <div class="question">
+
+                        <div class="question-title">
+                            Username
+                        </div>
+
+                        <input
+                            type="text"
+                            name="username"
+                            class="situation-input"
+                            placeholder="Choose a username"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="question">
+
+                        <div class="question-title">
+                            Email
+                        </div>
+
+                        <input
+                            type="email"
+                            name="email"
+                            class="situation-input"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="question">
+
+                        <div class="question-title">
+                            Password
+                        </div>
+
+                        <input
+                            type="password"
+                            name="password"
+                            class="situation-input"
+                            placeholder="Create a password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="submit-area">
+
+                        <button
+                            type="submit"
+                            class="primary-button submit-button"
+                        >
+                            Create Account →
+                        </button>
+
+                    </div>
+
+
+                </form>
+
+
+                <p style="text-align:center; margin-top:20px;">
+
+                    Already have an account?
+
+                    <a href="/login">
+                        Log in
+                    </a>
+
+                </p>
+
+
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>
